@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive LR Dashboard 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0A192F',
+                        primary: '#1E3A8A', // blue-900
+                        secondary: '#3B82F6', // blue-500
+                        accent: '#14B8A6', // teal-500
+                        warning: '#F59E0B', // amber-500
+                        danger: '#DC2626', // red-600
+                        light: '#F3F4F6', // gray-100
+                        white: '#FFFFFF'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F3F4F6; }
+        .card { background-color: #FFFFFF; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 1.25rem; }
+        .badge { display: inline-block; padding: 0.25em 0.5em; font-size: 0.75em; font-weight: 700; border-radius: 0.25rem; }
+        .badge-danger { background-color: #FEE2E2; color: #DC2626; }
+        .badge-warning { background-color: #FEF3C7; color: #D97706; }
+        .badge-success { background-color: #D1FAE5; color: #059669; }
+        .progress-bar-bg { background-color: #E5E7EB; border-radius: 9999px; height: 0.75rem; width: 100%; overflow: hidden; }
+        .progress-bar-fill { height: 100%; border-radius: 9999px; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="bg-warning text-white text-center py-2 px-4 font-bold text-sm tracking-wide shadow-md z-50 relative">
+        ⚠️ Dashboard นี้จัดทำขึ้นเพื่อการฝึกอบรมและการอภิปรายเชิงบริหารเท่านั้น ไม่ใช่ข้อมูลเฝ้าระวังโรคจริง และไม่ใช้สำหรับการวินิจฉัยหรือรักษาผู้ป่วย
+    </div>
+
+    <header class="bg-navy text-white px-6 py-4 shadow-lg flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold text-accent">LR Executive Dashboard</h1>
+            <p class="text-sm text-gray-300 mt-1">สรุปสถานการณ์ห้องคลอดและสูตินรีเวช (Labor Room & OB-GYN)</p>
+        </div>
+        <div class="text-right">
+            <div class="bg-primary px-4 py-2 rounded-lg border border-secondary shadow-inner">
+                <p class="text-xs text-gray-300">ข้อมูล ณ วันที่</p>
+                <p class="text-lg font-bold text-white">22 พฤษภาคม 2569</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="p-6 max-w-7xl mx-auto space-y-6">
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="card border-l-4 border-secondary">
+                <h3 class="text-gray-500 text-sm font-semibold uppercase">ยอดคลอดสะสม (ปี 69)</h3>
+                <div class="flex items-end mt-2">
+                    <span class="text-3xl font-bold text-navy">281</span>
+                    <span class="text-sm text-gray-500 ml-2">ราย</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">จากยอด Admission 507 ราย (55.4%)</p>
+            </div>
+            
+            <div class="card border-l-4 border-danger">
+                <h3 class="text-gray-500 text-sm font-semibold uppercase">อัตราส่งต่อ (Refer Rate)</h3>
+                <div class="flex items-end mt-2">
+                    <span class="text-3xl font-bold text-danger">1.24%</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">5 ราย จาก 403 ราย (เปรียบเทียบปี 68)</p>
+            </div>
+
+            <div class="card border-l-4 border-warning">
+                <h3 class="text-gray-500 text-sm font-semibold uppercase">Productivity (LR vs PP)</h3>
+                <div class="mt-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-gray-500">LR (ห้องคลอด)</p>
+                        <p class="text-xl font-bold text-warning">82.60%</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500">PP (หลังคลอด)</p>
+                        <p class="text-xl font-bold text-danger">117.73%</p>
+                    </div>
+                </div>
+                <p class="text-xs text-danger mt-2 font-semibold">⚠️ PP ภาระงานเกินเกณฑ์ (>110%)</p>
+            </div>
+
+            <div class="card border-l-4 border-accent">
+                <h3 class="text-gray-500 text-sm font-semibold uppercase">ความพึงพอใจผู้รับบริการ</h3>
+                <div class="flex items-end mt-2">
+                    <span class="text-3xl font-bold text-accent">100%</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">อ้างอิงจากแบบสำรวจ IP Voices ล่าสุด</p>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="card col-span-1 lg:col-span-2">
+                <h2 class="text-lg font-bold text-navy mb-4 border-b pb-2">Situation Overview: แนวโน้มการคลอดและวิธีคลอด</h2>
+                <div class="relative h-64 w-full">
+                    <canvas id="situationChart"></canvas>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">* ใช้คะแนน Training scoring 1-5 และข้อมูลจำลองเพื่อการอภิปรายเชิงบริหารเท่านั้น ไม่ใช่ค่าจริง</p>
+            </div>
+
+            <div class="card col-span-1">
+                <h2 class="text-lg font-bold text-navy mb-4 border-b pb-2">Disease Risk Comparison</h2>
+                <div class="relative h-56 w-full">
+                    <canvas id="riskRadarChart"></canvas>
+                </div>
+                <p class="text-xs text-gray-400 mt-2 text-center">* ความเสี่ยงมารดาและทารก (Training scoring 1-5)</p>
+                <div class="mt-3 flex justify-center space-x-2">
+                    <span class="badge badge-danger">Preterm สูง (Score 4)</span>
+                    <span class="badge badge-warning">PPH ปานกลาง (Score 3)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="card">
+                <h2 class="text-lg font-bold text-navy mb-4 border-b pb-2">Hospital Operations Impact & Readiness</h2>
+                
+                <div class="space-y-4 mt-4">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-semibold text-gray-700">อัตรากำลังสูติแพทย์ (OB-GYN)</span>
+                            <span class="text-sm font-bold text-warning">75% (ต้องการเสริม)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill bg-warning" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-semibold text-gray-700">ความเพียงพอของเตียงหลังคลอด (PP Bed)</span>
+                            <span class="text-sm font-bold text-danger">115% (Overcrowded)</span>
+                        </div>
+                        <div class="progress-bar-bg bg-red-100">
+                            <div class="progress-bar-fill bg-danger" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-sm font-semibold text-gray-700">การติดตามตรวจหลังคลอด 3 ครั้งตามเกณฑ์</span>
+                            <span class="text-sm font-bold text-accent">Score 3/5 (ปานกลาง)*</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill bg-accent" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">* คะแนนนี้ใช้เพื่อการฝึกวิเคราะห์และการอภิปรายเชิงบริหารเท่านั้น</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="bg-red-50 border-l-4 border-danger p-4 rounded-lg shadow-sm">
+                    <h3 class="text-danger font-bold text-sm flex items-center">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Risk Signals / Red Flags
+                    </h3>
+                    <ul class="mt-2 text-sm text-red-800 list-disc list-inside space-y-1">
+                        <li><strong>ภาระงานตึกหลังคลอด (PP) วิกฤต:</strong> Productivity พุ่งถึง 117.73% เสี่ยงต่อความเหนื่อยล้าของบุคลากร</li>
+                        <li><strong>แนวโน้ม Preterm:</strong> พบสัญญาณคลอดก่อนกำหนดเพิ่มขึ้น (อ้างอิงทะเบียน Preterm)</li>
+                    </ul>
+                </div>
+
+                <div class="card flex-grow">
+                    <h2 class="text-lg font-bold text-navy mb-3 border-b pb-2">Executive Action Timeline</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <span class="badge badge-danger w-16 text-center mr-3 mt-0.5">24 ชั่วโมง</span>
+                            <p class="text-sm text-gray-700">อนุมัติเกลี่ยอัตรากำลังพยาบาลจากแผนกอื่นมาช่วยตึกหลังคลอด (PP) ชั่วคราว</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="badge badge-warning w-16 text-center mr-3 mt-0.5">7 วัน</span>
+                            <p class="text-sm text-gray-700">เรียกประชุมทีมสูติแพทย์เพื่อวิเคราะห์ Case Preterm และ C/S rate ที่สูงขึ้น</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="badge badge-success w-16 text-center mr-3 mt-0.5">30 วัน</span>
+                            <p class="text-sm text-gray-700">ทบทวนและปรับปรุงแนวทางการประเมินความเสี่ยงเพื่อลด Refer Rate และเพิ่มคุณภาพการตรวจหลังคลอด</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-8 pt-4 border-t border-gray-300 text-center text-xs text-gray-500">
+            <p><strong>Data Limitation & Ethics Note:</strong> ข้อมูลบางส่วนอ้างอิงจากแฟ้มข้อมูลตัวชี้วัดปี 2569 (ไฟล์ CSV ที่ระบุ) หากไม่มีตัวเลขจริงชัดเจน จะใช้ Training scoring 1-5 แทนการแสดงผล</p>
+            <p>การแสดงผลทั้งหมดเพื่อการพัฒนาระบบบริการเชิงบริหารเท่านั้น ห้ามใช้ข้อมูลอ้างอิงเพื่อการวินิจฉัยทางการแพทย์รายบุคคล ไม่มีข้อมูลยืนยันจากแหล่งข้อมูลที่ให้ไว้ในบางมิติ (เช่น รายละเอียดอาการทางคลินิก)</p>
+        </section>
+
+    </main>
+
+    <script>
+        // Chart 1: Situation Overview (Admissions vs Deliveries & Methods)
+        const ctxSit = document.getElementById('situationChart').getContext('2d');
+        new Chart(ctxSit, {
+            type: 'bar',
+            data: {
+                labels: ['ต.ค.', 'พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.'], // Months based on Thai fiscal year
+                datasets: [
+                    {
+                        label: 'ยอดคลอดปกติ (Normal)',
+                        data: [15, 18, 16, 20, 15, 12, 14], // Estimated training data
+                        backgroundColor: '#14B8A6',
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'ผ่าตัดคลอด (C/S)',
+                        data: [15, 19, 17, 24, 16, 13, 12], // Estimated training data
+                        backgroundColor: '#3B82F6',
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Total Admission',
+                        type: 'line',
+                        data: [73, 86, 72, 85, 75, 63, 53], // Actual data from CSV snippet
+                        borderColor: '#0A192F',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.3,
+                        pointBackgroundColor: '#F59E0B'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Chart 2: Disease Risk Comparison (Radar Chart)
+        const ctxRisk = document.getElementById('riskRadarChart').getContext('2d');
+        new Chart(ctxRisk, {
+            type: 'radar',
+            data: {
+                labels: ['Preterm', 'PPH (ตกเลือด)', 'Severe Pre-eclampsia', 'Sepsis', 'Fetal Distress'],
+                datasets: [{
+                    label: 'Risk Score (1-5)',
+                    data: [4, 3, 2, 1, 3], // Training scoring 1-5
+                    backgroundColor: 'rgba(220, 38, 38, 0.2)', // red-600 with opacity
+                    borderColor: '#DC2626',
+                    pointBackgroundColor: '#DC2626',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#DC2626'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { stepSize: 1, backdropColor: 'transparent' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
